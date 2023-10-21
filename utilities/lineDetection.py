@@ -19,13 +19,16 @@ while cap.isOpened():
 
     # frame = cv2.GaussianBlur(orig_frame, (5, 5), 0)
     frame = orig_frame
-    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-    lower_bound = np.array([0, 0, 150])
-    upper_bound = np.array([180, 180, 180])
+    # Kantenerkennung in HSV-Farbraum nach Farbe
+    # hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    # lower_bound = np.array([0, 0, 150])
+    # upper_bound = np.array([180, 180, 180])
+    # mask = cv2.inRange(hsv, lower_bound, upper_bound)
 
-    mask = cv2.inRange(hsv, lower_bound, upper_bound)
-    edges = cv2.Canny(mask, 75, 150)
+    # Kantenerkennung in Graustufen
+    mask_grey = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    edges = cv2.Canny(mask_grey, 75, 150)
 
     lines = cv2.HoughLinesP(edges, 1, np.pi/180, 50, maxLineGap=50)
     if lines is not None:
@@ -35,7 +38,7 @@ while cap.isOpened():
 
     cv2.imshow("frame", frame)
     cv2.imshow("edges", edges)
-    cv2.imshow("mask", mask)
+    cv2.imshow("mask", mask_grey)
 
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
