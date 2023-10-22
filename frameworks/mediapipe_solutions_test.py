@@ -11,9 +11,6 @@ mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
 
 
-# Download Model from https://developers.google.com/mediapipe/solutions/vision/pose_landmarker/index#models
-model_path = "/MediaPipe/pose_landmarker_heavy.task"
-
 # Webcam öffnen (Standardkamera, normalerweise 0 oder -1)
 cap = cv2.VideoCapture(0)
 # Überprüfen, ob die Kamera geöffnet wurde

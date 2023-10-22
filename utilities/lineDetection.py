@@ -40,7 +40,6 @@ while cap.isOpened():
     cv2.imshow("edges", edges)
     cv2.imshow("mask", mask_grey)
 
-
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
