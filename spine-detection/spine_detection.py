@@ -9,6 +9,17 @@ from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 import scipy.stats as stats
 
+# go through each frame in the video
+debug_mode = False
+
+# set video path
+video_path = "../resources/videos/squat/squat-yellow-positive_540x1080.mp4"
+# video_path = "../resources/videos/squat/squat-yellow-negative_540x1080.mp4"
+
+# define color range in HSV
+lower_color_range = np.array([0, 150, 100])
+upper_color_range = np.array([30, 255, 255])
+
 
 def get_roi(img, pose_landmarks, padding_top=100, padding_bottom=25, padding_left=100, padding_right=75):
     mp_pose = mp.solutions.pose
@@ -127,7 +138,7 @@ def is_spine_straight(spine_contours):
     #     return False
 
 
-def main(path, lower_color_value=np.array([0, 150, 100]), upper_color_value=np.array([30, 255, 255])):
+def main():
     mp_drawing = mp.solutions.drawing_utils
     mp_pose = mp.solutions.pose
 
@@ -144,8 +155,10 @@ def main(path, lower_color_value=np.array([0, 150, 100]), upper_color_value=np.a
     frame_counter = 0
     fps_sum = 0
 
+    current_frame = 0
+
     # Webcam öffnen (Standardkamera, normalerweise 0 oder -1)
-    cap = cv.VideoCapture(path)
+    cap = cv.VideoCapture(video_path)
     # Überprüfen, ob die Kamera geöffnet wurde
     if not cap.isOpened():
         print("Can't open video (stream end?). Exiting ...")
@@ -154,7 +167,9 @@ def main(path, lower_color_value=np.array([0, 150, 100]), upper_color_value=np.a
     # Setup mediapipe instance
     with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
         while cap.isOpened():
+            debug_mode and cap.set(cv.CAP_PROP_POS_FRAMES, current_frame)
             ret, frame = cap.read()
+
             if not ret:
                 print("Can't receive frame (stream end?). Exiting ...")
                 break
@@ -189,7 +204,7 @@ def main(path, lower_color_value=np.array([0, 150, 100]), upper_color_value=np.a
                 continue
 
             # Filter yellow color
-            filtered_frame = filter_frame(cropped_frame, lower_color_value, upper_color_value)
+            filtered_frame = filter_frame(cropped_frame, lower_color_range, upper_color_range)
             # cv.imshow('Filtered', filtered_frame)
 
             # Detect spine contours
@@ -218,25 +233,41 @@ def main(path, lower_color_value=np.array([0, 150, 100]), upper_color_value=np.a
             cv.namedWindow('Mediapipe Feed', cv.WINDOW_NORMAL)
             cv.moveWindow('Mediapipe Feed', 1920 - 270, 0)
             cv.putText(frame, display_text, (10, 30), font, 1, display_color, 2, cv.LINE_AA)
-            cv.putText(frame, "FPS=" + str(fps), (10, 1040), font, 1, (0, 0, 0), 2, cv.LINE_AA)
-            cv.putText(frame, "Avg FPS=" + str(int(fps_sum / frame_counter)), (10, 1070), font, 1, (0, 0, 0), 2,
+            if debug_mode:
+                cv.putText(frame, "Frame nr. = " + str(current_frame), (10, 1070), font, 1, (0, 0, 0), 2, cv.LINE_AA)
+            else:
+                cv.putText(frame, "FPS=" + str(fps), (10, 1040), font, 1, (0, 0, 0), 2, cv.LINE_AA)
+                cv.putText(frame, "Avg FPS=" + str(int(fps_sum / frame_counter)), (10, 1070), font, 1, (0, 0, 0), 2,
                        cv.LINE_AA)
             cv.imshow('Mediapipe Feed', frame)
             cv.resizeWindow('Mediapipe Feed', 270, 540)
 
-            if cv.waitKey(1) & 0xFF == ord('q'):
+            # if cv.waitKey(1) & 0xFF == ord('q'):
+            #     break
+
+            # Warte auf eine Taste zum Steuern der Frames (wenn 'q' gedrückt wird, beende die Schleife)
+            if debug_mode:
+                key = cv.waitKey(0) & 0xFF
+            else:
+                key = cv.waitKey(1) & 0xFF
+
+            if key == ord('q'):
                 break
+
+            elif key == ord('d'):
+                current_frame += 1
+            elif key == ord('a'):
+                if current_frame > 0:
+                    current_frame -= 1
+            elif key == ord('s'):
+                if current_frame > 10:
+                    current_frame -= 10
+            elif key == ord('w'):
+                current_frame += 10
 
         cap.release()
         cv.destroyAllWindows()
 
 
 if __name__ == "__main__":
-    video_path = "../resources/videos/squat/squat-yellow-positive_540x1080.mp4"
-    # video_path = "../resources/videos/squat/squat-yellow-negative_540x1080.mp4"
-
-    # define yellow color range in HSV
-    lower_yellow = np.array([0, 150, 100])
-    upper_yellow = np.array([30, 255, 255])
-
-    main(video_path, lower_yellow, upper_yellow)
+    main()
