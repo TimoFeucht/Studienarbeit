@@ -138,23 +138,23 @@ def is_spine_straight(frame, keypoints, upper_color_range, lower_color_range, sh
     y = spine_contours[:, 0, 1]
 
     # Fit spine curve
-    polynom_spine_curve = np.polyfit(x, y, 2)
-    try:
-        if abs(polynom_spine_curve[0]) > 0.008:
-            return False
-        else:
-            return True
-    except IndexError:
-        print("No curve found.")
-        return None
+    # polynom_spine_curve = np.polyfit(x, y, 2)
+    # try:
+    #     if abs(polynom_spine_curve[0]) > 0.007:
+    #         return False
+    #     else:
+    #         return True
+    # except IndexError:
+    #     print("No curve found.")
+    #     return None
 
     # Linear Regression
-    # slope, intercept, r_value, p_value, std_err = stats.linregress(x, y)
+    slope, intercept, r_value, p_value, std_err = stats.linregress(x, y)
     # print("r-squared:", r_value ** 2)
-    # if r_value ** 2 > 0.9:
-    #     return True
-    # else:
-    #     return False
+    if r_value ** 2 > 0.7:
+        return True
+    else:
+        return False
 
 
 def main(video_path, lower_color_range, upper_color_range, debug_mode=False):
