@@ -9,19 +9,8 @@ from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 import scipy.stats as stats
 
-# go through each frame in the video
-debug_mode = False
 
-# set video path
-video_path = "../resources/videos/squat/squat-yellow-positive_540x1080.mp4"
-# video_path = "../resources/videos/squat/squat-yellow-negative_540x1080.mp4"
-
-# define color range in HSV
-lower_color_range = np.array([0, 150, 100])
-upper_color_range = np.array([30, 255, 255])
-
-
-def get_roi(img, pose_landmarks, padding_top=100, padding_bottom=25, padding_left=100, padding_right=75):
+def get_roi(img, pose_landmarks, padding_top=100, padding_bottom=25, padding_left=100, padding_right=25):
     mp_pose = mp.solutions.pose
     image_height, image_width, _ = img.shape
 
@@ -45,9 +34,9 @@ def get_roi(img, pose_landmarks, padding_top=100, padding_bottom=25, padding_lef
 
     # crop image
     x1 = int(avg_hip_x) - padding_left
-    x2 = int(avg_shoulder_x)  # - padding_right
+    x2 = int(avg_shoulder_x) - padding_right
     y1 = int(avg_shoulder_y) - padding_top
-    y2 = int(avg_hip_y)  # - padding_bottom
+    y2 = int(avg_hip_y) - padding_bottom
 
     # [y1:y2, x1:x2]
     if x1 <= 0:
@@ -79,6 +68,14 @@ def filter_frame(img, lower_bound, upper_bound):
 
 
 def detect_spine_contours(img):
+    """
+    Detect spine contours in image
+    :param img: image of person, cropped and filtered
+    :return: spine contours as numpy array, `None` if no contours found
+
+    Algorithm: applies gaussian blur and canny edge detection to frame. Assumption: spine is the first edge found in
+    the frame as seen from the origin of the image (top left)
+    """
     # Convert to grayscale
     img_gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 
@@ -91,14 +88,7 @@ def detect_spine_contours(img):
     # Konturen extrahieren
     contours, hierarchy = cv.findContours(img_canny, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
 
-    # Bild kopieren, um das Originalbild nicht zu verändern
-    img_contours = img.copy()
-
-    # Zeichnen Sie die Kontur ganz links auf das Ergebnisbild
-    cv.drawContours(img_contours, contours, -1, (255, 0, 0), 2)
-
     # Kontur ganz links identifizieren
-
     # Sortiere die Konturen nach x- und y-Koordinate
     contours = sorted(contours, key=lambda x: cv.boundingRect(x)[0] + cv.boundingRect(x)[1])
 
@@ -110,7 +100,36 @@ def detect_spine_contours(img):
         return None
 
 
-def is_spine_straight(spine_contours):
+def is_spine_straight(frame, keypoints, upper_color_range, lower_color_range, show_filtered=False,
+                      show_spine_contours=False):
+    """
+    Check if spine is straight by detecting the spine curve
+    :param frame: image with person
+    :param keypoints: detected keypoints with HPE
+    :param upper_color_range: Upper bound for color range in HSV of t-shirt color
+    :param lower_color_range: Lower bound for color range in HSV of t-shirt color
+    :param show_filtered: show frame after filtering color range
+    :param show_spine_contours: show frame with detected spine contours
+    :return: true if spine is straight, false if spine is round
+    """
+    cropped_frame = get_roi(frame, keypoints)
+    # cv.imshow('ROI', cropped_frame)
+
+    # Filter yellow color
+    filtered_frame = filter_frame(cropped_frame, lower_color_range, upper_color_range)
+    if show_filtered:
+        cv.imshow('Filtered', filtered_frame)
+
+    # Detect spine contours
+    spine_contours = detect_spine_contours(filtered_frame)
+    if spine_contours is None:  # if no contours found
+        display_text = "no contours found"
+        return
+    # draw contours on cropped and filtered frame
+    if show_spine_contours:
+        cv.drawContours(filtered_frame, [spine_contours], -1, (0, 0, 255), 2)
+        cv.imshow('Spine', filtered_frame)
+
     # ToDo: better algorithm to detect spine curve
     # Option 1: Fit curve to spine contours and check if curve is straight
     # Option 2: Linear Regression for spine contours --> check sum of squared residuals
@@ -138,7 +157,7 @@ def is_spine_straight(spine_contours):
     #     return False
 
 
-def main():
+def main(video_path, lower_color_range, upper_color_range, debug_mode=False):
     mp_drawing = mp.solutions.drawing_utils
     mp_pose = mp.solutions.pose
 
@@ -195,34 +214,18 @@ def main():
             #                           mp_drawing.DrawingSpec(color=(245, 117, 66), thickness=2, circle_radius=2),
             #                           mp_drawing.DrawingSpec(color=(245, 66, 230), thickness=2, circle_radius=2))
 
-            # Create ROI
             try:
-                cropped_frame = get_roi(frame, results.pose_landmarks)
-                # cv.imshow('ROI', cropped_frame)
+                # check if spine is straight
+                if is_spine_straight(frame, results.pose_landmarks, upper_color_range, lower_color_range,
+                                     show_filtered=False, show_spine_contours=True):
+                    display_text = "straight spine"
+                    display_color = (0, 0, 0)
+                else:
+                    display_text = "round spine"
+                    display_color = (0, 0, 255)
             except AttributeError as e:
                 print("Error creating ROI (key points not detected?): " + str(e))
                 continue
-
-            # Filter yellow color
-            filtered_frame = filter_frame(cropped_frame, lower_color_range, upper_color_range)
-            # cv.imshow('Filtered', filtered_frame)
-
-            # Detect spine contours
-            spine_contours = detect_spine_contours(filtered_frame)
-            if spine_contours is None:  # if no contours found
-                display_text = "no contours found"
-                continue
-            # draw contours on cropped and filtered frame
-            cv.drawContours(filtered_frame, [spine_contours], -1, (0, 0, 255), 2)
-            cv.imshow('Spine', filtered_frame)
-
-            # check if spine is straight
-            if is_spine_straight(spine_contours):
-                display_text = "straight spine"
-                display_color = (0, 0, 0)
-            else:
-                display_text = "round spine"
-                display_color = (0, 0, 255)
 
             # calculate fps
             fps = 1 / (new_frame_time - prev_frame_time)
@@ -238,7 +241,7 @@ def main():
             else:
                 cv.putText(frame, "FPS=" + str(fps), (10, 1040), font, 1, (0, 0, 0), 2, cv.LINE_AA)
                 cv.putText(frame, "Avg FPS=" + str(int(fps_sum / frame_counter)), (10, 1070), font, 1, (0, 0, 0), 2,
-                       cv.LINE_AA)
+                           cv.LINE_AA)
             cv.imshow('Mediapipe Feed', frame)
             cv.resizeWindow('Mediapipe Feed', 270, 540)
 
@@ -270,4 +273,15 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # go through each frame in the video
+    debug_mode = True
+
+    # set video path
+    video_path = "../../resources/videos/squat/squat-yellow-positive_540x1080.mp4"
+    # video_path = "../resources/videos/squat/squat-yellow-negative_540x1080.mp4"
+
+    # define color range in HSV
+    lower_color_range = np.array([0, 150, 100])
+    upper_color_range = np.array([30, 255, 255])
+
+    main(video_path, lower_color_range, upper_color_range, debug_mode)

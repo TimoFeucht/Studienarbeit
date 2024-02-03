@@ -19,7 +19,7 @@ def video2images(video_path, output_folder, frame_rate=1):
 
 
 if __name__ == "__main__":
-    video_path = "../resources/videos/squat/squat-yellow-positive_540x1080.mp4"
+    video_path = "../../../resources/videos/squat/squat-yellow-positive_540x1080.mp4"
     output_folder = "../resources/images/squat/squat-yellow-positive_540x1080"
 
     video2images(video_path, output_folder)
