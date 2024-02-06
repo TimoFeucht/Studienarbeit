@@ -44,11 +44,40 @@ def frames2csv(frames_folder, csv_path):
     print(f"Written {i} frames to {csv_path}")
 
 
+def copy_jpg_files(source_folder, destination_folder, param):
+    """"
+    cpoy jpg files from source_folder to destination_folder with filename starting from param
+    e.g. param = 100 -> frame_100.jpg, frame_101.jpg, ...
+    """
+    frames = os.listdir(source_folder)
+    frames = sorted(frames, key=numerische_sortierung)
+    i = 0
+    for frame in frames:
+        if frame.endswith(".jpg"):
+            i += 1
+            frame_path = os.path.join(source_folder, frame)
+            new_frame_path = os.path.join(destination_folder, f"frame_{param + i}.jpg")
+            os.rename(frame_path, new_frame_path)
+    print(f"Copied {i} frames from {source_folder} to {destination_folder}")
+
+
 if __name__ == "__main__":
-    video_path = "../../../resources/videos/squat/squat-yellow-positive_540x1080.mp4"
-    output_folder = "../../../resources/images/squat/squat-yellow-positive_540x1080"
+    # ask user if he really wants to run this script, because it will overwrite files
+    print("This script will overwrite files in the output folder. Are you sure you want to run this script?")
+    answer = input("Type 'yes' to continue: ")
+
+    if answer != "yes":
+        print("Exiting...")
+        exit()
+
+    video_path = "../../../resources/videos/squat/videoname.mp4"
+    output_folder = "../../../resources/images/squat/test-data"
 
     # video2images(video_path, output_folder)
 
-    csv_path = "../../../resources/images/squat/squat-yellow-positive_540x1080/squat-yellow-positive_540x1080.csv"
+    csv_path = "../../../resources/images/squat/test-data/test_data.csv"
     # frames2csv(output_folder, csv_path)
+
+    source_folder = "../../../resources/images/squat/squat-yellow-negative_540x1080"
+    destination_folder = "../../../resources/images/squat/test-data"
+    # copy_jpg_files(source_folder, destination_folder, 191)

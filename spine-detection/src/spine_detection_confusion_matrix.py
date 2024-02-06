@@ -7,11 +7,11 @@ from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, r
 from spine_detection import is_spine_straight
 
 # Lese die gelabelten Daten ein
-csv_path = "../../resources/images/squat/squat-yellow-positive_540x1080/squat-yellow-positive_540x1080.csv"
+csv_path = "../../resources/images/squat/test-data/test_data.csv"
 labels_df = pd.read_csv(csv_path, delimiter=";", header=None)
 
 # Video-Datei
-video_path = "../../resources/videos/squat/squat-yellow-positive_540x1080.mp4"
+video_path = "../../resources/videos/test-data/test_video.mp4"
 
 # Farbfilter für die Hautfarbe
 lower_color_range = np.array([0, 150, 100])
@@ -98,3 +98,23 @@ print("Accuracy:", accuracy)
 print("Precision:", precision)
 print("Recall:", recall)
 print("F1 Score:", f1)
+
+# Best results so far:
+
+## 0.005 polynom fitting:
+# Confusion Matrix:
+#  [[347  50]
+#  [ 72  99]]
+# Accuracy: 0.7852112676056338
+# Precision: 0.6644295302013423
+# Recall: 0.5789473684210527
+# F1 Score: 0.61875
+
+## 0.004 polynom fitting:
+# Confusion Matrix:
+#  [[365  32]
+#  [ 92  79]]
+# Accuracy: 0.7816901408450704
+# Precision: 0.7117117117117117
+# Recall: 0.4619883040935672
+# F1 Score: 0.5602836879432624
