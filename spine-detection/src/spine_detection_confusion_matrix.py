@@ -7,11 +7,11 @@ from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, r
 from spine_detection import is_spine_straight
 
 # Lese die gelabelten Daten ein
-csv_path = "../../resources/images/squat/test-data/test_data.csv"
+csv_path = "../../resources/videos/test-data/test_video_functionalshirt.csv"
 labels_df = pd.read_csv(csv_path, delimiter=";", header=None)
 
 # Video-Datei
-video_path = "../../resources/videos/test-data/test_video.mp4"
+video_path = "../../resources/videos/test-data/test_video_functionalshirt.mp4"
 
 # Farbfilter für die Hautfarbe
 lower_color_range = np.array([0, 150, 100])

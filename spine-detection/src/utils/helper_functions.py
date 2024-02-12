@@ -70,14 +70,16 @@ if __name__ == "__main__":
         print("Exiting...")
         exit()
 
-    video_path = "../../../resources/videos/squat/videoname.mp4"
-    output_folder = "../../../resources/images/squat/test-data"
+    print("Running the script...")
 
-    # video2images(video_path, output_folder)
+    video_path = "../../../resources/videos/test-data/test_video_functionalshirt.mp4"
+    output_folder = "../../../resources/images/squat/test-imgages-functionalshirt"
 
-    csv_path = "../../../resources/images/squat/test-data/test_data.csv"
-    # frames2csv(output_folder, csv_path)
+    video2images(video_path, output_folder)
+
+    csv_path = "../../../resources/videos/test-data/test_video_functionalshirt.csv"
+    frames2csv(output_folder, csv_path)
 
     source_folder = "../../../resources/images/squat/squat-yellow-negative_540x1080"
-    destination_folder = "../../../resources/images/squat/test-data"
+    destination_folder = "../../../resources/images/squat/test_images_shirt"
     # copy_jpg_files(source_folder, destination_folder, 191)

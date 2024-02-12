@@ -123,7 +123,7 @@ def is_spine_straight(frame, keypoints, upper_color_range, lower_color_range, sh
     # Detect spine contours
     spine_contours = detect_spine_contours(filtered_frame)
     if spine_contours is None:  # if no contours found
-        display_text = "no contours found"
+        # display_text = "no contours found"
         return
     # draw contours on cropped and filtered frame
     if show_spine_contours:
@@ -217,7 +217,7 @@ def main(video_path, lower_color_range, upper_color_range, debug_mode=False):
             try:
                 # check if spine is straight
                 if is_spine_straight(frame, results.pose_landmarks, upper_color_range, lower_color_range,
-                                     show_filtered=False, show_spine_contours=True):
+                                     show_filtered=True, show_spine_contours=True):
                     display_text = "straight spine"
                     display_color = (0, 0, 0)
                 else:
@@ -234,7 +234,6 @@ def main(video_path, lower_color_range, upper_color_range, debug_mode=False):
             fps_sum += fps
 
             cv.namedWindow('Mediapipe Feed', cv.WINDOW_NORMAL)
-            cv.moveWindow('Mediapipe Feed', 1920 - 270, 0)
             cv.putText(frame, display_text, (10, 30), font, 1, display_color, 2, cv.LINE_AA)
             if debug_mode:
                 cv.putText(frame, "Frame nr. = " + str(current_frame), (10, 1070), font, 1, (0, 0, 0), 2, cv.LINE_AA)
@@ -274,10 +273,11 @@ def main(video_path, lower_color_range, upper_color_range, debug_mode=False):
 
 if __name__ == "__main__":
     # go through each frame in the video
-    debug_mode = True
+    debug_mode = False
 
     # set video path
-    video_path = "../../resources/videos/squat/squat-yellow-positive_540x1080.mp4"
+    video_path = "../../resources/videos/test-data/test_video_functionalshirt.mp4"
+    # video_path = "../../resources/videos/squat/squat-yellow-positive_540x1080.mp4"
     # video_path = "../resources/videos/squat/squat-yellow-negative_540x1080.mp4"
 
     # define color range in HSV
