@@ -14,8 +14,8 @@ labels_df = pd.read_csv(csv_path, delimiter=";", header=None)
 video_path = "../../resources/videos/test-data/test_video_functionalshirt.mp4"
 
 # Farbfilter für die Hautfarbe
-lower_color_range = np.array([0, 150, 100])
-upper_color_range = np.array([30, 255, 255])
+lower_color_range = np.array([0, 0, 0])
+upper_color_range = np.array([255, 255, 255])
 
 # Results from the algorithm
 algorithm_spine_results = []  # Hier 1 für gerade, 0 für nicht gerade

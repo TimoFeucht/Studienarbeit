@@ -10,7 +10,7 @@ from mediapipe.tasks.python import vision
 import scipy.stats as stats
 
 
-def get_roi(img, pose_landmarks, padding_top=100, padding_bottom=25, padding_left=100, padding_right=25):
+def get_spine_roi(img, pose_landmarks, padding_top=25, padding_bottom=25, padding_left=100, padding_right=25):
     mp_pose = mp.solutions.pose
     image_height, image_width, _ = img.shape
 
@@ -112,23 +112,24 @@ def is_spine_straight(frame, keypoints, upper_color_range, lower_color_range, sh
     :param show_spine_contours: show frame with detected spine contours
     :return: true if spine is straight, false if spine is round
     """
-    cropped_frame = get_roi(frame, keypoints)
+    cropped_frame = get_spine_roi(frame, keypoints)
     # cv.imshow('ROI', cropped_frame)
 
-    # Filter yellow color
-    filtered_frame = filter_frame(cropped_frame, lower_color_range, upper_color_range)
-    if show_filtered:
-        cv.imshow('Filtered', filtered_frame)
+    # # Filter yellow color
+    # filtered_frame = filter_frame(cropped_frame, lower_color_range, upper_color_range)
+    # if show_filtered:
+    #     cv.imshow('Filtered', filtered_frame)
 
     # Detect spine contours
-    spine_contours = detect_spine_contours(filtered_frame)
+    spine_contours = detect_spine_contours(cropped_frame)
     if spine_contours is None:  # if no contours found
         # display_text = "no contours found"
         return
+
     # draw contours on cropped and filtered frame
     if show_spine_contours:
-        cv.drawContours(filtered_frame, [spine_contours], -1, (0, 0, 255), 2)
-        cv.imshow('Spine', filtered_frame)
+        cv.drawContours(cropped_frame, [spine_contours], -1, (0, 0, 255), 2)
+        cv.imshow('Spine', cropped_frame)
 
     # ToDo: better algorithm to detect spine curve
     # Option 1: Fit curve to spine contours and check if curve is straight
@@ -140,7 +141,8 @@ def is_spine_straight(frame, keypoints, upper_color_range, lower_color_range, sh
     # Fit spine curve
     polynom_spine_curve = np.polyfit(x, y, 2)
     try:
-        if abs(polynom_spine_curve[0]) > 0.003:
+        # ToDo: implement check for hollow back (negative polynom) and sway back (positive polynom)
+        if abs(polynom_spine_curve[0]) > 0.004:
             return False
         else:
             return True
@@ -273,7 +275,7 @@ def main(video_path, lower_color_range, upper_color_range, debug_mode=False):
 
 if __name__ == "__main__":
     # go through each frame in the video
-    debug_mode = False
+    debug_mode = True
 
     # set video path
     video_path = "../../resources/videos/test-data/test_video_functionalshirt.mp4"
@@ -281,7 +283,7 @@ if __name__ == "__main__":
     # video_path = "../resources/videos/squat/squat-yellow-negative_540x1080.mp4"
 
     # define color range in HSV
-    lower_color_range = np.array([0, 150, 100])
-    upper_color_range = np.array([30, 255, 255])
+    lower_color_range = np.array([0, 0, 0])
+    upper_color_range = np.array([255, 255, 255])
 
     main(video_path, lower_color_range, upper_color_range, debug_mode)
