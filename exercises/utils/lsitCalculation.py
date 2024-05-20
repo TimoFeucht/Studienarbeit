@@ -5,7 +5,7 @@ import mediapipe as mp
 def is_l_sit(person) -> int:
     THRESHOLD_HIP = 96
     THRESHOLD_MIN = 172
-    THRESHOLD_PERFECT = 176
+    THRESHOLD_PERFECT = 175
     THRESHOLD_MAX = 183
 
     mp_pose = mp.solutions.pose

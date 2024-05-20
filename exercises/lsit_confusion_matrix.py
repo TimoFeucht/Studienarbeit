@@ -53,9 +53,9 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
         frame = cv.cvtColor(frame, cv.COLOR_RGB2BGR)
 
         # Render key points
-        mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS,
-                                  mp_drawing.DrawingSpec(color=(245, 117, 66), thickness=2, circle_radius=2),
-                                  mp_drawing.DrawingSpec(color=(245, 66, 230), thickness=2, circle_radius=2))
+        # mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS,
+        #                           mp_drawing.DrawingSpec(color=(245, 117, 66), thickness=2, circle_radius=2),
+        #                           mp_drawing.DrawingSpec(color=(245, 66, 230), thickness=2, circle_radius=2))
 
         # show frame
         cv.imshow('LSit Detection', frame)
@@ -88,20 +88,18 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
 print("Spine detection finished, calculating confusion matrix and metrics...")
 
 # Vergleiche mit den tatsächlichen Labels
+print(labels_df[1].unique())
 actual_labels = labels_df[1].tolist()
 
 # Berechne die Confusion Matrix und Metriken
 conf_matrix = confusion_matrix(actual_labels, algorithm_LSit)
 accuracy = accuracy_score(actual_labels, algorithm_LSit)
-precision = precision_score(actual_labels, algorithm_LSit)
-recall = recall_score(actual_labels, algorithm_LSit)
-# f score
-f1 = f1_score(actual_labels, algorithm_LSit)
+precision = precision_score(actual_labels, algorithm_LSit, average='macro')
+recall = recall_score(actual_labels, algorithm_LSit, average='macro')
+f1 = f1_score(actual_labels, algorithm_LSit, average='macro')
 
 print("Confusion Matrix:\n", conf_matrix)
 print("Accuracy:", accuracy)
 print("Precision:", precision)
 print("Recall:", recall)
 print("F1 Score:", f1)
-
-# Best results so far:
