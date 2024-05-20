@@ -17,6 +17,8 @@ video_path = "../../resources/videos/test-data/test_video_functionalshirt.mp4"
 lower_color_range = np.array([0, 0, 0])
 upper_color_range = np.array([255, 255, 255])
 
+prev_spine_detection = False
+
 # Results from the algorithm
 algorithm_spine_results = []  # Hier 1 für gerade, 0 für nicht gerade
 
@@ -63,9 +65,11 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
         try:
             # check if spine is straight
             if is_spine_straight(frame, results.pose_landmarks, upper_color_range, lower_color_range,
-                                 show_filtered=False, show_spine_contours=False):
+                                 previous_frame=prev_spine_detection, show_filtered=False, show_spine_contours=False):
+                prev_spine_detection = True
                 algorithm_spine_results.append(1)
             else:
+                prev_spine_detection = False
                 algorithm_spine_results.append(0)
         except AttributeError as e:
             print("Error detecting spine (key points not detected?): " + str(e))
@@ -84,6 +88,20 @@ print("Spine detection finished, calculating confusion matrix and metrics...")
 
 # Vergleiche mit den tatsächlichen Labels
 actual_labels = labels_df[1].tolist()
+# ectract file name of true positive, false positive, true negative and false negative
+# true positive
+true_positive = [i for i in range(len(actual_labels)) if actual_labels[i] == 1 and algorithm_spine_results[i] == 1]
+# false positive
+false_positive = [i for i in range(len(actual_labels)) if actual_labels[i] == 0 and algorithm_spine_results[i] == 1]
+# true negative
+true_negative = [i for i in range(len(actual_labels)) if actual_labels[i] == 0 and algorithm_spine_results[i] == 0]
+# false negative
+false_negative = [i for i in range(len(actual_labels)) if actual_labels[i] == 1 and algorithm_spine_results[i] == 0]
+
+print("True Positive:", true_positive)
+print("False Positive:", false_positive)
+print("True Negative:", true_negative)
+print("False Negative:", false_negative)
 
 # Berechne die Confusion Matrix und Metriken
 conf_matrix = confusion_matrix(actual_labels, algorithm_spine_results)

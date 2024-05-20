@@ -100,7 +100,25 @@ def detect_spine_contours(img):
         return None
 
 
-def is_spine_straight(frame, keypoints, upper_color_range, lower_color_range, show_filtered=False,
+def get_max_distance(x, y):
+    # Berechne die Differenzen zwischen allen Paaren von Punkten
+    x_diff = np.subtract.outer(x, x)
+    y_diff = np.subtract.outer(y, y)
+
+    # Berechne die quadratischen Differenzen
+    distance_squared = np.square(x_diff) + np.square(y_diff)
+
+    # Berechne die quadratischen Distanzen zwischen allen Paaren von Punkten
+    distance_matrix = np.sqrt(distance_squared)
+
+    # Ignoriere die Diagonale, da Distanz eines Punktes zu sich selbst immer 0 ist
+    np.fill_diagonal(distance_matrix, np.nan)
+
+    # Finde den maximalen Abstand
+    return np.nanmax(distance_matrix)
+
+
+def is_spine_straight(frame, keypoints, upper_color_range, lower_color_range, previous_frame, show_filtered=False,
                       show_spine_contours=False):
     """
     Check if spine is straight by detecting the spine curve
@@ -138,11 +156,20 @@ def is_spine_straight(frame, keypoints, upper_color_range, lower_color_range, sh
     x = spine_contours[:, 0, 0]
     y = spine_contours[:, 0, 1]
 
+    # skip frame if not enough points to fit curve
+    # ATTENTION: simple check, but taktes time to calculate!!!
+    # around 7 FPS reduction
+    max_distance = get_max_distance(x, y)
+
+    if max_distance < 150:
+        return previous_frame
+
     # Fit spine curve
     polynom_spine_curve = np.polyfit(x, y, 2)
+
     try:
-        # ToDo: implement check for hollow back (negative polynom) and sway back (positive polynom)
-        if abs(polynom_spine_curve[0]) > 0.004:
+        # check if curve is straight
+        if abs(polynom_spine_curve[0]) > 0.0045:
             return False
         else:
             return True
@@ -153,7 +180,7 @@ def is_spine_straight(frame, keypoints, upper_color_range, lower_color_range, sh
     # Linear Regression
     # slope, intercept, r_value, p_value, std_err = stats.linregress(x, y)
     # # print("r-squared:", r_value ** 2)
-    # if r_value ** 2 > 0.7:
+    # if r_value ** 2 > 0.91:
     #     return True
     # else:
     #     return False
@@ -177,6 +204,8 @@ def main(video_path, lower_color_range, upper_color_range, debug_mode=False):
     fps_sum = 0
 
     current_frame = 0
+
+    prev_spine_detection = False
 
     # Webcam öffnen (Standardkamera, normalerweise 0 oder -1)
     cap = cv.VideoCapture(video_path)
@@ -219,10 +248,12 @@ def main(video_path, lower_color_range, upper_color_range, debug_mode=False):
             try:
                 # check if spine is straight
                 if is_spine_straight(frame, results.pose_landmarks, upper_color_range, lower_color_range,
-                                     show_filtered=True, show_spine_contours=True):
+                                     previous_frame=prev_spine_detection, show_filtered=True, show_spine_contours=True):
+                    prev_spine_detection = True
                     display_text = "straight spine"
                     display_color = (0, 0, 0)
                 else:
+                    prev_spine_detection = False
                     display_text = "round spine"
                     display_color = (0, 0, 255)
             except AttributeError as e:
