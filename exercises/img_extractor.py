@@ -6,8 +6,18 @@ import cv2 as cv
 import mediapipe as mp
 from lsit.utils.lsitCalculation import is_l_sit
 
+"""
+Extract images from video and save them to disk. You can specify the video path the variable 'video_path'.
+    - Press 'q' to exit the program
+    - Press 'd' to go to the next frame
+    - Press 'a' to go to the previous frame
+    - Press 's' to go 10 frames back
+    - Press 'w' to go 10 frames forward
+    - Press 'e' to save the current frame to disk
+"""
 
-def main(video_path, debug_mode=False):
+
+def main(video_path, debug_mode=False, left_knee_counter=0, right_knee_counter=0):
     mp_drawing = mp.solutions.drawing_utils
     mp_pose = mp.solutions.pose
 
@@ -63,8 +73,16 @@ def main(video_path, debug_mode=False):
 
             # Render key points
             mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS,
-                                      mp_drawing.DrawingSpec(color=(245, 117, 66), thickness=2, circle_radius=2),
-                                      mp_drawing.DrawingSpec(color=(245, 66, 230), thickness=2, circle_radius=2))
+                                      mp_drawing.DrawingSpec(color=(245, 117, 66), thickness=4, circle_radius=2),
+                                      mp_drawing.DrawingSpec(color=(0, 255, 0), thickness=4, circle_radius=2))
+
+            # check for left knee and right knee
+            left_knee = results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_KNEE]
+            # right_knee = results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_KNEE]
+            # if left_knee.visibility > 0.5:
+            #     left_knee_counter += 1
+            # if right_knee.visibility > 0.5:
+            #     right_knee_counter += 1
 
             # calculate fps
             fps = 1 / (new_frame_time - prev_frame_time)
@@ -107,12 +125,16 @@ def main(video_path, debug_mode=False):
             elif key == ord('e'):
                 # save image to disk
                 video_name = video_path.split("/")[-1].split(".")[0]
-                path = "../resources/images/lsit/labeled_images/" + video_name + f"_frame_{current_frame}.jpg"
+                path = "../resources/images/labeled_images/" + video_name + f"_frame_{current_frame}.jpg"
                 cv.imwrite(path, frame)
                 print(f"Saving image to {path}")
 
         cap.release()
         cv.destroyAllWindows()
+
+        # print("Left knee counter: ", left_knee_counter)
+        # print("Right knee counter: ", right_knee_counter)
+        # print("Frames: ", frame_counter)
 
 
 if __name__ == "__main__":
@@ -120,6 +142,6 @@ if __name__ == "__main__":
     debug_mode = True
 
     # set video path
-    video_path = "../resources/videos/squat/test_video_squat_4.MP4"
+    video_path = "../resources/videos/squat/test_video_squat_1.MP4"
 
     main(video_path, debug_mode)
