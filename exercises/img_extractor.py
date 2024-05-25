@@ -78,6 +78,8 @@ def main(video_path, debug_mode=False, left_knee_counter=0, right_knee_counter=0
 
             # check for left knee and right knee
             left_knee = results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_KNEE]
+            print("Frame number: ", current_frame)
+            print(left_knee.x * frame.shape[1], left_knee.y * frame.shape[0])
             # right_knee = results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_KNEE]
             # if left_knee.visibility > 0.5:
             #     left_knee_counter += 1
@@ -142,6 +144,6 @@ if __name__ == "__main__":
     debug_mode = True
 
     # set video path
-    video_path = "../resources/videos/squat/test_video_squat_1.MP4"
+    video_path = "../resources/videos/lsit/test_video_lsit_1.mp4"
 
     main(video_path, debug_mode)
