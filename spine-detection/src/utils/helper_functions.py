@@ -72,12 +72,12 @@ if __name__ == "__main__":
 
     print("Running the script...")
 
-    video_path = "../../../resources/videos/lsit/test_video_lsit_1.mp4"
-    output_folder = "../../../resources/images/lsit/test_video_lsit_1"
+    video_path = "../../../resources/videos/squat/Cutted_Video.mov"
+    output_folder = "../../../resources/images/squat/cutted_video"
 
     video2images(video_path, output_folder)
 
-    csv_path = "../../../resources/videos/lsit/test_video_lsit_1.csv"
+    csv_path = "../../../resources/videos/squat/cutted_video.csv"
     frames2csv(output_folder, csv_path)
 
     # source_folder = "../../../resources/images/squat/squat-yellow-negative_540x1080"
