@@ -27,7 +27,7 @@ class Squat:
         left_ankle = extract_keypoint(person, mp_pose.PoseLandmark.LEFT_ANKLE)
         right_ankle = extract_keypoint(person, mp_pose.PoseLandmark.RIGHT_ANKLE)
 
-        knee_left = calculate_angle_between_three_points(left_hip, left_knee, left_ankle)
-        knee_right = calculate_angle_between_three_points(right_hip, right_knee, right_ankle)
+        knee_left = calculate_angle_between_three_points(left_ankle, left_knee, left_hip)
+        knee_right = calculate_angle_between_three_points(right_ankle, right_knee, right_hip)
         print(knee_left, knee_right)
         return (knee_left + knee_right) / 2

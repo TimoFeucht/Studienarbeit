@@ -144,6 +144,6 @@ if __name__ == "__main__":
     debug_mode = True
 
     # set video path
-    video_path = "C:/Users/mitte/PycharmProjects/Studienarbeit/resources/videos/squat/Cutted_Video.mov"
-
+    #video_path = "C:/Users/mitte/PycharmProjects/Studienarbeit/resources/videos/squat/Cutted_Video.mov"
+    video_path = "C:/Users/mitte/StudioProjects/Studienarbeit/android/app/src/main/res/raw/test_video_functionalshirt.mp4"
     main(video_path, debug_mode)
