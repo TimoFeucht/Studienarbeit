@@ -72,14 +72,13 @@ def main(video_path, debug_mode=False, left_knee_counter=0, right_knee_counter=0
             frame = cv.cvtColor(frame, cv.COLOR_RGB2BGR)
 
             # Render key points
-            mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS,
-                                      mp_drawing.DrawingSpec(color=(245, 117, 66), thickness=4, circle_radius=2),
-                                      mp_drawing.DrawingSpec(color=(0, 255, 0), thickness=4, circle_radius=2))
+            # mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS,
+            #                           mp_drawing.DrawingSpec(color=(245, 117, 66), thickness=4, circle_radius=2),
+            #                           mp_drawing.DrawingSpec(color=(0, 255, 0), thickness=4, circle_radius=2))
 
             # check for left knee and right knee
             left_knee = results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_KNEE]
             print("Frame number: ", current_frame)
-            print(left_knee.x * frame.shape[1], left_knee.y * frame.shape[0])
             # right_knee = results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_KNEE]
             # if left_knee.visibility > 0.5:
             #     left_knee_counter += 1
@@ -127,7 +126,7 @@ def main(video_path, debug_mode=False, left_knee_counter=0, right_knee_counter=0
             elif key == ord('e'):
                 # save image to disk
                 video_name = video_path.split("/")[-1].split(".")[0]
-                path = "../resources/images/labeled_images/" + video_name + f"_frame_{current_frame}.jpg"
+                path = "../resources/images/labeled_images/Label_Tensorflow_And_Hand_Labeling/all_without_green_labels/" + video_name + f"_frame_{current_frame}.jpg"
                 cv.imwrite(path, frame)
                 print(f"Saving image to {path}")
 
@@ -144,6 +143,6 @@ if __name__ == "__main__":
     debug_mode = True
 
     # set video path
-    video_path = "../resources/videos/lsit/test_video_lsit_1.mp4"
+    video_path = "../resources/videos/squat/test_video_squat_6.MP4"
 
     main(video_path, debug_mode)
