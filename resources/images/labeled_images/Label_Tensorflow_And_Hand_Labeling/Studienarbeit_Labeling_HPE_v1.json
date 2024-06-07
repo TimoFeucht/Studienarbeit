@@ -1,0 +1,475 @@
+{
+  "_via_settings": {
+    "ui": {
+      "annotation_editor_height": 25,
+      "annotation_editor_fontsize": 0.8,
+      "leftsidebar_width": 18,
+      "image_grid": {
+        "img_height": 80,
+        "rshape_fill": "none",
+        "rshape_fill_opacity": 0.3,
+        "rshape_stroke": "yellow",
+        "rshape_stroke_width": 2,
+        "show_region_shape": true,
+        "show_image_policy": "all"
+      },
+      "image": {
+        "region_label": "__via_region_id__",
+        "region_color": "__via_default_region_color__",
+        "region_label_font": "10px Sans",
+        "on_image_annotation_editor_placement": "NEAR_REGION"
+      }
+    },
+    "core": {
+      "buffer_size": 18,
+      "filepath": {},
+      "default_filepath": ""
+    },
+    "project": {
+      "name": "Studienarbeit_Labeling_HPE_v1"
+    }
+  },
+  "_via_img_metadata": {
+    "squat-functionalshirt-positive_540x1080_frame_0.jpg71071": {
+      "filename": "squat-functionalshirt-positive_540x1080_frame_0.jpg",
+      "size": 71071,
+      "regions": [
+        {
+          "shape_attributes": {
+            "name": "point",
+            "cx": 250,
+            "cy": 868
+          },
+          "region_attributes": {
+            "Keypoints": "RIGHT_ANKLE"
+          }
+        },
+        {
+          "shape_attributes": {
+            "name": "point",
+            "cx": 262,
+            "cy": 660
+          },
+          "region_attributes": {
+            "Keypoints": "RIGHT_KNEE"
+          }
+        },
+        {
+          "shape_attributes": {
+            "name": "point",
+            "cx": 262,
+            "cy": 479
+          },
+          "region_attributes": {
+            "Keypoints": "RIGHT_HIP"
+          }
+        },
+        {
+          "shape_attributes": {
+            "name": "point",
+            "cx": 274,
+            "cy": 314
+          },
+          "region_attributes": {
+            "Keypoints": "RIGHT_SHOULDER"
+          }
+        },
+        {
+          "shape_attributes": {
+            "name": "point",
+            "cx": 280,
+            "cy": 413
+          },
+          "region_attributes": {
+            "Keypoints": "RIGHT_ELLBOW"
+          }
+        },
+        {
+          "shape_attributes": {
+            "name": "point",
+            "cx": 333,
+            "cy": 510
+          },
+          "region_attributes": {
+            "Keypoints": "RIGHT_WRIST"
+          }
+        }
+      ],
+      "file_attributes": {}
+    },
+    "squat-functionalshirt-positive_540x1080_frame_40.jpg93114": {
+      "filename": "squat-functionalshirt-positive_540x1080_frame_40.jpg",
+      "size": 93114,
+      "regions": [
+        {
+          "shape_attributes": {
+            "name": "point",
+            "cx": 265,
+            "cy": 855
+          },
+          "region_attributes": {
+            "Keypoints": "RIGHT_ANKLE"
+          }
+        },
+        {
+          "shape_attributes": {
+            "name": "point",
+            "cx": 358,
+            "cy": 684
+          },
+          "region_attributes": {
+            "Keypoints": "RIGHT_KNEE"
+          }
+        },
+        {
+          "shape_attributes": {
+            "name": "point",
+            "cx": 204,
+            "cy": 569
+          },
+          "region_attributes": {
+            "Keypoints": "RIGHT_HIP"
+          }
+        },
+        {
+          "shape_attributes": {
+            "name": "point",
+            "cx": 295,
+            "cy": 420
+          },
+          "region_attributes": {
+            "Keypoints": "RIGHT_SHOULDER"
+          }
+        },
+        {
+          "shape_attributes": {
+            "name": "point",
+            "cx": 372,
+            "cy": 497
+          },
+          "region_attributes": {
+            "Keypoints": "RIGHT_ELLBOW"
+          }
+        },
+        {
+          "shape_attributes": {
+            "name": "point",
+            "cx": 368,
+            "cy": 450
+          },
+          "region_attributes": {
+            "Keypoints": "RIGHT_WRIST"
+          }
+        }
+      ],
+      "file_attributes": {}
+    },
+    "squat-functionalshirt-positive_540x1080_frame_61.jpg91002": {
+      "filename": "squat-functionalshirt-positive_540x1080_frame_61.jpg",
+      "size": 91002,
+      "regions": [
+        {
+          "shape_attributes": {
+            "name": "point",
+            "cx": 270,
+            "cy": 860
+          },
+          "region_attributes": {
+            "Keypoints": "RIGHT_ANKLE"
+          }
+        },
+        {
+          "shape_attributes": {
+            "name": "point",
+            "cx": 392,
+            "cy": 724
+          },
+          "region_attributes": {
+            "Keypoints": "RIGHT_KNEE"
+          }
+        },
+        {
+          "shape_attributes": {
+            "name": "point",
+            "cx": 211,
+            "cy": 758
+          },
+          "region_attributes": {
+            "Keypoints": "RIGHT_HIP"
+          }
+        },
+        {
+          "shape_attributes": {
+            "name": "point",
+            "cx": 305,
+            "cy": 588
+          },
+          "region_attributes": {
+            "Keypoints": "RIGHT_SHOULDER"
+          }
+        },
+        {
+          "shape_attributes": {
+            "name": "point",
+            "cx": 406,
+            "cy": 679
+          },
+          "region_attributes": {
+            "Keypoints": "RIGHT_ELLBOW"
+          }
+        },
+        {
+          "shape_attributes": {
+            "name": "point",
+            "cx": 390,
+            "cy": 613
+          },
+          "region_attributes": {
+            "Keypoints": "RIGHT_WRIST"
+          }
+        }
+      ],
+      "file_attributes": {}
+    },
+    "test_video_lsit_1_frame_20.jpg86622": {
+      "filename": "test_video_lsit_1_frame_20.jpg",
+      "size": 86622,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_lsit_1_frame_52.jpg97693": {
+      "filename": "test_video_lsit_1_frame_52.jpg",
+      "size": 97693,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_lsit_2_frame_17.jpg189366": {
+      "filename": "test_video_lsit_2_frame_17.jpg",
+      "size": 189366,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_lsit_2_frame_37.jpg193888": {
+      "filename": "test_video_lsit_2_frame_37.jpg",
+      "size": 193888,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_lsit_3_frame_38.jpg183331": {
+      "filename": "test_video_lsit_3_frame_38.jpg",
+      "size": 183331,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_lsit_3_frame_44.jpg185967": {
+      "filename": "test_video_lsit_3_frame_44.jpg",
+      "size": 185967,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_lsit_3_frame_58.jpg186268": {
+      "filename": "test_video_lsit_3_frame_58.jpg",
+      "size": 186268,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_lsit_5_frame_0.jpg158303": {
+      "filename": "test_video_lsit_5_frame_0.jpg",
+      "size": 158303,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_lsit_5_frame_10.jpg171228": {
+      "filename": "test_video_lsit_5_frame_10.jpg",
+      "size": 171228,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_lsit_5_frame_23.jpg183219": {
+      "filename": "test_video_lsit_5_frame_23.jpg",
+      "size": 183219,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_lsit_6_frame_47.jpg211796": {
+      "filename": "test_video_lsit_6_frame_47.jpg",
+      "size": 211796,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_lsit_6_frame_67.jpg216792": {
+      "filename": "test_video_lsit_6_frame_67.jpg",
+      "size": 216792,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_lsit_7_frame_32.jpg196925": {
+      "filename": "test_video_lsit_7_frame_32.jpg",
+      "size": 196925,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_lsit_7_frame_42.jpg194828": {
+      "filename": "test_video_lsit_7_frame_42.jpg",
+      "size": 194828,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_lsit_7_frame_58.jpg196062": {
+      "filename": "test_video_lsit_7_frame_58.jpg",
+      "size": 196062,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_squat_1_frame_53.jpg170627": {
+      "filename": "test_video_squat_1_frame_53.jpg",
+      "size": 170627,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_squat_1_frame_66.jpg172458": {
+      "filename": "test_video_squat_1_frame_66.jpg",
+      "size": 172458,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_squat_1_frame_88.jpg172652": {
+      "filename": "test_video_squat_1_frame_88.jpg",
+      "size": 172652,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_squat_2_frame_0.jpg158822": {
+      "filename": "test_video_squat_2_frame_0.jpg",
+      "size": 158822,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_squat_2_frame_48.jpg190326": {
+      "filename": "test_video_squat_2_frame_48.jpg",
+      "size": 190326,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_squat_2_frame_61.jpg187460": {
+      "filename": "test_video_squat_2_frame_61.jpg",
+      "size": 187460,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_squat_3_frame_10.jpg162291": {
+      "filename": "test_video_squat_3_frame_10.jpg",
+      "size": 162291,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_squat_3_frame_23.jpg175219": {
+      "filename": "test_video_squat_3_frame_23.jpg",
+      "size": 175219,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_squat_3_frame_33.jpg172717": {
+      "filename": "test_video_squat_3_frame_33.jpg",
+      "size": 172717,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_squat_4_frame_16.jpg176385": {
+      "filename": "test_video_squat_4_frame_16.jpg",
+      "size": 176385,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_squat_4_frame_31.jpg179858": {
+      "filename": "test_video_squat_4_frame_31.jpg",
+      "size": 179858,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_squat_4_frame_50.jpg186802": {
+      "filename": "test_video_squat_4_frame_50.jpg",
+      "size": 186802,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_squat_6_frame_28.jpg173019": {
+      "filename": "test_video_squat_6_frame_28.jpg",
+      "size": 173019,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_squat_6_frame_184.jpg190433": {
+      "filename": "test_video_squat_6_frame_184.jpg",
+      "size": 190433,
+      "regions": [],
+      "file_attributes": {}
+    },
+    "test_video_squat_6_frame_210.jpg186541": {
+      "filename": "test_video_squat_6_frame_210.jpg",
+      "size": 186541,
+      "regions": [],
+      "file_attributes": {}
+    }
+  },
+  "_via_attributes": {
+    "region": {
+      "Keypoints": {
+        "type": "dropdown",
+        "description": "",
+        "options": {
+          "LEFT_ANKLE": "",
+          "RIGHT_ANKLE": "",
+          "LEFT_KNEE": "",
+          "RIGHT_KNEE": "",
+          "LEFT_HIP": "",
+          "RIGHT_HIP": "",
+          "LEFT_SHOULDER": "",
+          "RIGHT_SHOULDER": "",
+          "LEFT_ELLBOW": "",
+          "RIGHT_ELLBOW": "",
+          "LEFT_WRIST": "",
+          "RIGHT_WRIST": ""
+        },
+        "default_options": {}
+      }
+    },
+    "file": {}
+  },
+  "_via_data_format_version": "2.0.10",
+  "_via_image_id_list": [
+    "squat-functionalshirt-positive_540x1080_frame_0.jpg71071",
+    "squat-functionalshirt-positive_540x1080_frame_40.jpg93114",
+    "squat-functionalshirt-positive_540x1080_frame_61.jpg91002",
+    "test_video_lsit_1_frame_20.jpg86622",
+    "test_video_lsit_1_frame_52.jpg97693",
+    "test_video_lsit_2_frame_17.jpg189366",
+    "test_video_lsit_2_frame_37.jpg193888",
+    "test_video_lsit_3_frame_38.jpg183331",
+    "test_video_lsit_3_frame_44.jpg185967",
+    "test_video_lsit_3_frame_58.jpg186268",
+    "test_video_lsit_5_frame_0.jpg158303",
+    "test_video_lsit_5_frame_10.jpg171228",
+    "test_video_lsit_5_frame_23.jpg183219",
+    "test_video_lsit_6_frame_47.jpg211796",
+    "test_video_lsit_6_frame_67.jpg216792",
+    "test_video_lsit_7_frame_32.jpg196925",
+    "test_video_lsit_7_frame_42.jpg194828",
+    "test_video_lsit_7_frame_58.jpg196062",
+    "test_video_squat_1_frame_53.jpg170627",
+    "test_video_squat_1_frame_66.jpg172458",
+    "test_video_squat_1_frame_88.jpg172652",
+    "test_video_squat_2_frame_0.jpg158822",
+    "test_video_squat_2_frame_48.jpg190326",
+    "test_video_squat_2_frame_61.jpg187460",
+    "test_video_squat_3_frame_10.jpg162291",
+    "test_video_squat_3_frame_23.jpg175219",
+    "test_video_squat_3_frame_33.jpg172717",
+    "test_video_squat_4_frame_16.jpg176385",
+    "test_video_squat_4_frame_31.jpg179858",
+    "test_video_squat_4_frame_50.jpg186802",
+    "test_video_squat_6_frame_28.jpg173019",
+    "test_video_squat_6_frame_184.jpg190433",
+    "test_video_squat_6_frame_210.jpg186541"
+  ]
+}
